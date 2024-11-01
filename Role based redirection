@@ -1,0 +1,27 @@
+// User role redirection logic
+switch ($role) {
+    case 'delivery_driver':
+        header("Location: delivery_driver.php");
+        break;
+    case 'stock_manager':
+        header("Location: stock_manager_dashboard.php");
+        break;
+    case 'inventory_staff':
+        header("Location: inventory_staff_dashboard.php");
+        break;
+    case 'supplier_coordinator':
+        header("Location: supplier_coordinator_dashboard.php");
+        break;
+    case 'manager':
+        header("Location: manager_dashboard.php");
+        break;
+    case 'kitchen_inventory_staff':
+        header("Location: kitchen_inventory_staff.php");
+        break;
+    case 'kitchen_manager':
+        header("Location: kitchen_manager.php");
+        break;
+    default:
+        header("Location: index.php");
+        break;
+}
