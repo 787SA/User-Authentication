@@ -1,0 +1,32 @@
+<?php
+// Define recipes with required ingredient quantities
+$recipes = [
+    'Chicken and Chips' => ['chicken' => 0.5, 'veg' => 0.25],
+    'Steak and Chips' => ['beef' => 1, 'veg' => 0.25],
+    'Fish and Chips' => ['fish' => 0.5, 'veg' => 0.25],
+    'Lamb Curry' => ['lamb' => 1],
+    'Apple Pie' => ['fruit' => 0.5]
+];
+
+// Fetch inventory data
+$inventoryItems = $pdo->query("SELECT * FROM inventory")->fetchAll();
+
+// Calculate maximum number of each dish that can be prepared
+$maxDishes = [];
+foreach ($recipes as $dish => $ingredients) {
+    $maxDishes[$dish] = PHP_INT_MAX; // Initialize with a high number
+    foreach ($ingredients as $ingredient => $quantity) {
+        foreach ($inventoryItems as $item) {
+            if (strtolower($item['product_name']) === strtolower($ingredient)) {
+                $maxDishes[$dish] = min($maxDishes[$dish], floor($item['quantity'] / $quantity));
+                break;
+            }
+        }
+    }
+}
+
+// Output max dishes calculation for each recipe
+foreach ($maxDishes as $dish => $max) {
+    echo "Maximum number of $dish: $max<br>";
+}
+?>
